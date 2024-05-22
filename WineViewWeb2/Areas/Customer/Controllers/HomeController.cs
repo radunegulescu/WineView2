@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WineViewWeb2.Models;
+using WineView2.Models;
 
-namespace WineViewWeb2.Controllers
+namespace WineView2Web.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

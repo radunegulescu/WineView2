@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WineViewWeb2.Models
+namespace WineView2.Models
 {
     public class Color
     {
