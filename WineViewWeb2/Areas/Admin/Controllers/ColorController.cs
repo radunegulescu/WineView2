@@ -70,13 +70,13 @@ namespace WineView2Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Color? categoryFromDb = _unitOfWork.Color.Get(u => u.Id == id);
+            Color? colorFromDb = _unitOfWork.Color.Get(u => u.Id == id);
 
-            if (categoryFromDb == null)
+            if (colorFromDb == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDb);
+            return View(colorFromDb);
         }
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)

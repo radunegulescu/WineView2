@@ -9,6 +9,8 @@ namespace WineView2.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         IColorRepository Color { get; }
+        IWineRepository Wine { get; }
+
         void Save();
     }
 }

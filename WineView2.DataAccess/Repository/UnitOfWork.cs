@@ -12,10 +12,13 @@ namespace WineView2.DataAccess.Repository
     {
         private ApplicationDbContext _db;
         public IColorRepository Color { get; private set; }
+        public IWineRepository Wine { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Color = new ColorRepository(_db);
+            Wine = new WineRepository(_db);
         }
 
         public void Save()
