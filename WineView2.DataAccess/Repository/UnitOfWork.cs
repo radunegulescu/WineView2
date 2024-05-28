@@ -11,14 +11,18 @@ namespace WineView2.DataAccess.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private ApplicationDbContext _db;
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IShoppingCartRepository ShoppingCart { get; private set; }
         public IColorRepository Color { get; private set; }
         public IWineRepository Wine { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
+            ApplicationUser = new ApplicationUserRepository(_db);
+            ShoppingCart = new ShoppingCartRepository(_db);
             Color = new ColorRepository(_db);
-            Wine = new WineRepository(_db);
+            Wine = new WineRepository(_db); 
         }
 
         public void Save()

@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WineView2.DataAccess.Repository.IRepository;
 using WineView2.Models;
 using WineView2.Models.ViewModels;
+using WineView2.Utility;
 
 namespace WineView2Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class WineController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
