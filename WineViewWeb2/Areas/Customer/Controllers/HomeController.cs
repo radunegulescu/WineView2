@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using WineView2.DataAccess.Repository.IRepository;
 using WineView2.Models;
 
@@ -24,8 +26,42 @@ namespace WineView2Web.Areas.Customer.Controllers
         }
         public IActionResult Details(int wineId)
         {
-            Wine wine = _unitOfWork.Wine.Get(u => u.Id == wineId, includeProperties: "Color");
-            return View(wine);
+            ShoppingCart cartObj = new()
+            {
+                Count = 1,
+                WineId = wineId,
+                Wine = _unitOfWork.Wine.Get(u => u.Id == wineId, includeProperties: "Color")
+            };
+            return View(cartObj);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId &&
+                                                                   u.WineId == shoppingCart.WineId);
+
+            if (cartFromDb != null)
+            {
+                //shopping cart exists
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+            }
+            else
+            {
+                //add cart record
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+            TempData["success"] = "Cart updated successfully";
+
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
