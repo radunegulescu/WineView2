@@ -10,6 +10,8 @@ namespace WineView2.DataAccess.Repository.IRepository
     {
         IApplicationUserRepository ApplicationUser { get; }
         IShoppingCartRepository ShoppingCart { get; }
+        IOrderDetailRepository OrderDetail { get; }
+        IOrderHeaderRepository OrderHeader { get; }
         IColorRepository Color { get; }
         IWineRepository Wine { get; }
 
