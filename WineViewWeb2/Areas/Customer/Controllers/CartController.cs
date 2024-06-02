@@ -117,7 +117,7 @@ namespace WineView2Web.Areas.Customer.Controllers
 			}
 
             //stripe logic
-            var domain = "https://localhost:7169/";
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
             var options = new SessionCreateOptions
             {
                 SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
