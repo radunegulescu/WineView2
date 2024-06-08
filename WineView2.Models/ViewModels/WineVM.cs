@@ -13,5 +13,7 @@ namespace WineView2.Models.ViewModels
         public Wine Wine { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> ColorList { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> WineryList { get; set; }
     }
 }

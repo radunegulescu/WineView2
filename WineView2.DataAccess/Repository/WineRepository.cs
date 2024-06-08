@@ -28,6 +28,7 @@ namespace WineView2.DataAccess.Repository
                 objFromDb.Price5 = obj.Price5;
                 objFromDb.Price10 = obj.Price10;
                 objFromDb.ColorId = obj.ColorId;
+                objFromDb.WineryId = obj.WineryId;  
 /*                objFromDb.StyleId = obj.StyleId;
                 objFromDb.Volume = obj.Volume;
                 objFromDb.Grapes = obj.Grapes;

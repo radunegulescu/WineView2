@@ -22,8 +22,7 @@ namespace WineView2Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Wine> objWineList = _unitOfWork.Wine.GetAll(includeProperties: "Color").ToList();
-            return View(objWineList);
+            return View();
         }
 
         public IActionResult Upsert(int? id)
@@ -32,6 +31,13 @@ namespace WineView2Web.Areas.Admin.Controllers
             {
                 Wine = new(),
                 ColorList = _unitOfWork.Color.GetAll().Select(
+                u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }
+                ),
+                WineryList = _unitOfWork.Winery.GetAll().Select(
                 u => new SelectListItem
                 {
                     Text = u.Name,
@@ -103,6 +109,13 @@ namespace WineView2Web.Areas.Admin.Controllers
                 Value = u.Id.ToString()
             }
             );
+            wineVM.WineryList = _unitOfWork.Winery.GetAll().Select(
+            u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            }
+            );
             return View(wineVM);
         }
 
@@ -111,7 +124,7 @@ namespace WineView2Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Wine> objWineList = _unitOfWork.Wine.GetAll(includeProperties: "Color").ToList();
+            List<Wine> objWineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery").ToList();
             return Json(new { data = objWineList });
         }
 

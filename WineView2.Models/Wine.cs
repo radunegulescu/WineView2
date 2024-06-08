@@ -40,6 +40,14 @@ namespace WineView2.Models
         [ValidateNever]
         public Color Color { get; set; }
 
+        [Required]
+        [Display(Name = "Winery")]
+        public int WineryId { get; set; }
+
+        [ForeignKey("WineryId")]
+        [ValidateNever]
+        public Winery Winery { get; set; }
+
         [ValidateNever]
         public string ImageUrl { get; set; }
     }

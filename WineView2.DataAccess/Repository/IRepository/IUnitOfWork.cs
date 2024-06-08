@@ -14,6 +14,7 @@ namespace WineView2.DataAccess.Repository.IRepository
         IOrderHeaderRepository OrderHeader { get; }
         IColorRepository Color { get; }
         IWineRepository Wine { get; }
+        IWineryRepository Winery { get; }
 
         void Save();
     }

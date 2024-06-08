@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WineView2.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using WineView2.DataAccess.Data;
 namespace WineView2.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240607182812_AddWineryToDb")]
+    partial class AddWineryToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -421,14 +424,9 @@ namespace WineView2.DataAccess.Migrations
                     b.Property<double>("Price5")
                         .HasColumnType("float");
 
-                    b.Property<int>("WineryId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("WineryId");
 
                     b.ToTable("Wines");
 
@@ -441,8 +439,7 @@ namespace WineView2.DataAccess.Migrations
                             Name = "Fortune of Time",
                             Price = 90.0,
                             Price10 = 80.0,
-                            Price5 = 85.0,
-                            WineryId = 1
+                            Price5 = 85.0
                         },
                         new
                         {
@@ -452,8 +449,7 @@ namespace WineView2.DataAccess.Migrations
                             Name = "Dark Skies",
                             Price = 30.0,
                             Price10 = 20.0,
-                            Price5 = 25.0,
-                            WineryId = 1
+                            Price5 = 25.0
                         },
                         new
                         {
@@ -463,8 +459,7 @@ namespace WineView2.DataAccess.Migrations
                             Name = "Vanish in the Sunset",
                             Price = 50.0,
                             Price10 = 35.0,
-                            Price5 = 40.0,
-                            WineryId = 1
+                            Price5 = 40.0
                         },
                         new
                         {
@@ -474,8 +469,7 @@ namespace WineView2.DataAccess.Migrations
                             Name = "Cotton Candy",
                             Price = 65.0,
                             Price10 = 55.0,
-                            Price5 = 60.0,
-                            WineryId = 2
+                            Price5 = 60.0
                         },
                         new
                         {
@@ -485,8 +479,7 @@ namespace WineView2.DataAccess.Migrations
                             Name = "Rock in the Ocean",
                             Price = 27.0,
                             Price10 = 20.0,
-                            Price5 = 25.0,
-                            WineryId = 2
+                            Price5 = 25.0
                         },
                         new
                         {
@@ -496,8 +489,7 @@ namespace WineView2.DataAccess.Migrations
                             Name = "Leaves and Wonders",
                             Price = 23.0,
                             Price10 = 20.0,
-                            Price5 = 22.0,
-                            WineryId = 3
+                            Price5 = 22.0
                         });
                 });
 
@@ -673,15 +665,7 @@ namespace WineView2.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WineView2.Models.Winery", "Winery")
-                        .WithMany()
-                        .HasForeignKey("WineryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Color");
-
-                    b.Navigation("Winery");
                 });
 #pragma warning restore 612, 618
         }

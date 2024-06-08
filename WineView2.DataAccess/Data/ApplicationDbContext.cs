@@ -17,6 +17,8 @@ namespace WineView2.DataAccess.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Wine> Wines { get; set; }
+        public DbSet<Winery> Wineries { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +29,11 @@ namespace WineView2.DataAccess.Data
                 new Color { Id = 2, Name = "Rose"},
                 new Color { Id = 3, Name = "White"}
                 );
+            modelBuilder.Entity<Winery>().HasData(
+                new Winery { Id = 1, Name = "Cotnari", Region = "Muntenia" },
+                new Winery { Id = 2, Name = "Purcari", Region = "Oltenia" },
+                new Winery { Id = 3, Name = "Jidvei", Region = "Moldova" }
+            );
             modelBuilder.Entity<Wine>().HasData(
                 new Wine
                 {
@@ -36,6 +43,7 @@ namespace WineView2.DataAccess.Data
                     Price5 = 85,
                     Price10 = 80,
                     ColorId = 1,
+                    WineryId = 1,
                     ImageUrl = ""
                 },
                 new Wine
@@ -46,6 +54,7 @@ namespace WineView2.DataAccess.Data
                     Price5 = 25,
                     Price10 = 20,
                     ColorId = 1,
+                    WineryId = 1,
                     ImageUrl = ""
                 },
                 new Wine
@@ -56,6 +65,7 @@ namespace WineView2.DataAccess.Data
                     Price5 = 40,
                     Price10 = 35,
                     ColorId = 1,
+                    WineryId = 1,
                     ImageUrl = ""
                 },
                 new Wine
@@ -66,6 +76,7 @@ namespace WineView2.DataAccess.Data
                     Price5 = 60,
                     Price10 = 55,
                     ColorId = 2,
+                    WineryId = 2,
                     ImageUrl = ""
                 },
                 new Wine
@@ -76,6 +87,7 @@ namespace WineView2.DataAccess.Data
                     Price5 = 25,
                     Price10 = 20,
                     ColorId = 2,
+                    WineryId = 2,
                     ImageUrl = ""
                 },
                 new Wine
@@ -86,6 +98,7 @@ namespace WineView2.DataAccess.Data
                     Price5 = 22,
                     Price10 = 20,
                     ColorId = 3,
+                    WineryId = 3,
                     ImageUrl=""
                 }
                 );
