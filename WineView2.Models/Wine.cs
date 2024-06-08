@@ -58,5 +58,14 @@ namespace WineView2.Models
 
         [ValidateNever]
         public string ImageUrl { get; set; }
+        
+        [Required]
+        public double Volume { get; set; }
+
+        [Required]
+        [Display(Name = "Is in clasifier?")]
+        public bool IsInClasifier { get; set; }
+
+        public int ClasifierId { get; set; } = 0;
     }
 }

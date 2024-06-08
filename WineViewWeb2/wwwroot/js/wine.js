@@ -10,6 +10,9 @@ function loadDataTable() {
             { data: 'color.name', "width": "15%" },
             { data: 'winery.name', "width": "15%" },
             { data: 'style.name', "width": "15%" },
+            { "data": "volume", "width": "15%" },
+            { "data": "isInClasifier", "width": "15%" },
+            { "data": "clasifierId", "width": "15%" },  
             {
                 data: 'id',
                 "render": function (data) {

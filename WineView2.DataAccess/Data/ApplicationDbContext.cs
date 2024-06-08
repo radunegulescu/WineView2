@@ -50,7 +50,10 @@ namespace WineView2.DataAccess.Data
                     ColorId = 1,
                     WineryId = 1,
                     StyleId = 1,
-                    ImageUrl = ""
+                    ImageUrl = "",
+                    Volume = 2,
+                    IsInClasifier = true,
+                    ClasifierId = 2
                 },
                 new Wine
                 {
@@ -62,7 +65,10 @@ namespace WineView2.DataAccess.Data
                     ColorId = 1,
                     WineryId = 1,
                     StyleId = 1,
-                    ImageUrl = ""
+                    ImageUrl = "",
+                    Volume = 2,
+                    IsInClasifier = false,
+                    ClasifierId = -1
                 },
                 new Wine
                 {
@@ -74,7 +80,10 @@ namespace WineView2.DataAccess.Data
                     ColorId = 1,
                     WineryId = 1,
                     StyleId = 1,
-                    ImageUrl = ""
+                    ImageUrl = "",
+                    Volume = 2,
+                    IsInClasifier = false,
+                    ClasifierId = -1
                 },
                 new Wine
                 {
@@ -86,7 +95,10 @@ namespace WineView2.DataAccess.Data
                     ColorId = 2,
                     WineryId = 2,
                     StyleId = 2,
-                    ImageUrl = ""
+                    ImageUrl = "",
+                    Volume = 2,
+                    IsInClasifier = false,
+                    ClasifierId = -1
                 },
                 new Wine
                 {
@@ -98,7 +110,10 @@ namespace WineView2.DataAccess.Data
                     ColorId = 2,
                     WineryId = 2,
                     StyleId = 2,
-                    ImageUrl = ""
+                    ImageUrl = "",
+                    Volume = 2,
+                    IsInClasifier = false,
+                    ClasifierId = -1
                 },
                 new Wine
                 {
@@ -110,7 +125,10 @@ namespace WineView2.DataAccess.Data
                     ColorId = 3,
                     WineryId = 3,
                     StyleId = 2,
-                    ImageUrl=""
+                    ImageUrl="",
+                    Volume = 2,
+                    IsInClasifier = false,
+                    ClasifierId = -1
                 }
                 );
         }

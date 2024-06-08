@@ -58,6 +58,28 @@
                             <label asp-for="Wine.StyleId" class="ms-2"></label>
                             <span asp-validation-for="Wine.StyleId" class="text-danger"></span>
                         </div>
+                        <div class="mb-3 col-12">
+                            <label asp-for="Wine.Volume"></label>(ML)
+                            <input asp-for="Wine.Volume" class="form-control" />
+                            <span asp-validation-for="Wine.Volume" class="text-danger"></span>
+                        </div>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <div class="mb-3 col-6">
+                                <label>Is in Clasifier?</label><br />
+                                <label>Yes</label>
+                                @Html.RadioButtonFor(m => m.Wine.IsInClasifier, "true", new { id = "input_Clasifier_True" })
+                                <label>No</label>
+                                @Html.RadioButtonFor(m => m.Wine.IsInClasifier, "false", new { id = "input_Clasifier_False", Checked = "checked" })
+                            </div>
+
+                            <div class="mb-3 col-6" id="Input_ClasifierId" style="display:none;">
+                                <label asp-for="Wine.ClasifierId"></label>
+                                <input asp-for="Wine.ClasifierId" class="form-control" />
+                                <span asp-validation-for="Wine.ClasifierId" class="text-danger"></span>
+                                @Html.ValidationMessage("CustomError", new { @class = "text-danger" })
+                            </div>
+                        }
                         <div class="form-floating py-2 col-12">
                             <input type="file" name="file" class="form-control border-0 shadow" />
                             <label asp-for="Wine.ImageUrl" class="ms-2"></label>
@@ -93,4 +115,15 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+    <script>
+        $(document).ready(function () {
+            $('#input_Clasifier_True').change(function () {
+                $('#Input_ClasifierId').show();
+            })
+            $('#input_Clasifier_False').change(function () {
+                $('#Input_ClasifierId').hide();
+            })
+        })
+    </script>
 }
+
