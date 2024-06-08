@@ -6,14 +6,14 @@ using WineView2.Models.ViewModels;
 using WineView2.Models;
 using WineView2.Utility;
 
-namespace WineryView2Web.Areas.Admin.Controllers
+namespace StyleView2Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Producer)]
-    public class WineryController : Controller
+    public class StyleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public WineryController(IUnitOfWork unitOfWork)
+        public StyleController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -25,34 +25,34 @@ namespace WineryView2Web.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            Winery winery = new Winery();
+            Style style = new Style();
             if (id != null && id != 0)
             {
                 //update
-                winery = _unitOfWork.Winery.Get(u => u.Id == id);
+                style = _unitOfWork.Style.Get(u => u.Id == id);
             }
-            return View(winery);
+            return View(style);
         }
 
         [HttpPost]
-        public IActionResult Upsert(Winery winery)
+        public IActionResult Upsert(Style style)
         {
             if (ModelState.IsValid)
             {
 
-                if (winery.Id == 0)
+                if (style.Id == 0)
                 {
-                    _unitOfWork.Winery.Add(winery);
+                    _unitOfWork.Style.Add(style);
                 }
                 else
                 {
-                    _unitOfWork.Winery.Update(winery);
+                    _unitOfWork.Style.Update(style);
                 }
                 _unitOfWork.Save();
-                TempData["success"] = "Winery created successfully";
+                TempData["success"] = "Style created successfully";
                 return RedirectToAction("Index");
             }
-            return View(winery);
+            return View(style);
         }
 
         #region API CALLS
@@ -60,20 +60,20 @@ namespace WineryView2Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Winery> objWineryList = _unitOfWork.Winery.GetAll().ToList();
-            return Json(new { data = objWineryList });
+            List<Style> objStyleList = _unitOfWork.Style.GetAll().ToList();
+            return Json(new { data = objStyleList });
         }
 
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            var wineryToBeDeleted = _unitOfWork.Winery.Get(u => u.Id == id);
-            if (wineryToBeDeleted == null)
+            var styleToBeDeleted = _unitOfWork.Style.Get(u => u.Id == id);
+            if (styleToBeDeleted == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            _unitOfWork.Winery.Remove(wineryToBeDeleted);
+            _unitOfWork.Style.Remove(styleToBeDeleted);
             _unitOfWork.Save();
 
             return Json(new { success = true, message = "Delete Successful" });

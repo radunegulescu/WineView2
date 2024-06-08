@@ -29,11 +29,11 @@ namespace WineView2.DataAccess.Repository
                 objFromDb.Price10 = obj.Price10;
                 objFromDb.ColorId = obj.ColorId;
                 objFromDb.WineryId = obj.WineryId;  
-/*                objFromDb.StyleId = obj.StyleId;
-                objFromDb.Volume = obj.Volume;
-                objFromDb.Grapes = obj.Grapes;
-                objFromDb.ClasifierId = obj.ClasifierId;
-                objFromDb.IsInClasifier = obj.IsInClasifier;*/
+                objFromDb.StyleId = obj.StyleId;
+                /*                objFromDb.Volume = obj.Volume;
+                                objFromDb.Grapes = obj.Grapes;
+                                objFromDb.ClasifierId = obj.ClasifierId;
+                                objFromDb.IsInClasifier = obj.IsInClasifier;*/
 
                 if (obj.ImageUrl != null)
                 {

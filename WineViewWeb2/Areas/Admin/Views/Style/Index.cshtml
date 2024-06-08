@@ -2,7 +2,7 @@
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Wine List</h2>
+                <h2 class="text-white py-2">Style List</h2>
             </div>
         </div>
     </div>
@@ -11,8 +11,8 @@
             <div class="col-6">
             </div>
             <div class="col-6 text-end">
-                <a asp-controller="Wine" asp-action="Upsert" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i>  Create New Wine
+                <a asp-controller="Style" asp-action="Upsert" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i>  Create New Style
                 </a>
             </div>
         </div>
@@ -21,9 +21,6 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Color</th>
-                    <th>Winery</th>
-                    <th>Style</th>
                     <th></th>
                 </tr>
             </thead>
@@ -32,5 +29,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/wine.js"></script>
+    <script src="~/js/style.js"></script>
 }

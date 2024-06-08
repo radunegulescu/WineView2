@@ -48,6 +48,14 @@ namespace WineView2.Models
         [ValidateNever]
         public Winery Winery { get; set; }
 
+        [Required]
+        [Display(Name = "Style")]
+        public int StyleId { get; set; }
+
+        [ForeignKey("StyleId")]
+        [ValidateNever]
+        public Style Style { get; set; }
+
         [ValidateNever]
         public string ImageUrl { get; set; }
     }

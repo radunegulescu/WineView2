@@ -18,6 +18,7 @@ namespace WineView2.DataAccess.Data
         public DbSet<Color> Colors { get; set; }
         public DbSet<Wine> Wines { get; set; }
         public DbSet<Winery> Wineries { get; set; }
+        public DbSet<Style> Styles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +34,11 @@ namespace WineView2.DataAccess.Data
                 new Winery { Id = 1, Name = "Cotnari", Region = "Muntenia" },
                 new Winery { Id = 2, Name = "Purcari", Region = "Oltenia" },
                 new Winery { Id = 3, Name = "Jidvei", Region = "Moldova" }
-            );
+                );
+            modelBuilder.Entity<Style>().HasData(
+                new Style { Id = 1, Name = "Dry" },
+                new Style { Id = 2, Name = "Sweet" }
+                );
             modelBuilder.Entity<Wine>().HasData(
                 new Wine
                 {
@@ -44,6 +49,7 @@ namespace WineView2.DataAccess.Data
                     Price10 = 80,
                     ColorId = 1,
                     WineryId = 1,
+                    StyleId = 1,
                     ImageUrl = ""
                 },
                 new Wine
@@ -55,6 +61,7 @@ namespace WineView2.DataAccess.Data
                     Price10 = 20,
                     ColorId = 1,
                     WineryId = 1,
+                    StyleId = 1,
                     ImageUrl = ""
                 },
                 new Wine
@@ -66,6 +73,7 @@ namespace WineView2.DataAccess.Data
                     Price10 = 35,
                     ColorId = 1,
                     WineryId = 1,
+                    StyleId = 1,
                     ImageUrl = ""
                 },
                 new Wine
@@ -77,6 +85,7 @@ namespace WineView2.DataAccess.Data
                     Price10 = 55,
                     ColorId = 2,
                     WineryId = 2,
+                    StyleId = 2,
                     ImageUrl = ""
                 },
                 new Wine
@@ -88,6 +97,7 @@ namespace WineView2.DataAccess.Data
                     Price10 = 20,
                     ColorId = 2,
                     WineryId = 2,
+                    StyleId = 2,
                     ImageUrl = ""
                 },
                 new Wine
@@ -99,6 +109,7 @@ namespace WineView2.DataAccess.Data
                     Price10 = 20,
                     ColorId = 3,
                     WineryId = 3,
+                    StyleId = 2,
                     ImageUrl=""
                 }
                 );

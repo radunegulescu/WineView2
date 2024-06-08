@@ -18,6 +18,7 @@ namespace WineView2.DataAccess.Repository
         public IColorRepository Color { get; private set; }
         public IWineRepository Wine { get; private set; }
         public IWineryRepository Winery { get; private set; }
+        public IStyleRepository Style { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -29,6 +30,7 @@ namespace WineView2.DataAccess.Repository
             Color = new ColorRepository(_db);
             Wine = new WineRepository(_db); 
             Winery = new WineryRepository(_db);
+            Style = new StyleRepository(_db);
         }
 
         public void Save()

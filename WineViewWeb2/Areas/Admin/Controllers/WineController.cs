@@ -43,6 +43,13 @@ namespace WineView2Web.Areas.Admin.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }
+                ),
+                StyleList = _unitOfWork.Style.GetAll().Select(
+                u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }
                 )
             };
 
@@ -92,6 +99,10 @@ namespace WineView2Web.Areas.Admin.Controllers
 
                 if (wineVM.Wine.Id == 0)
                 {
+                    if(wineVM.Wine.ImageUrl == null)
+                    {
+                        wineVM.Wine.ImageUrl = "";
+                    }
                     _unitOfWork.Wine.Add(wineVM.Wine);
                 }
                 else
@@ -116,6 +127,13 @@ namespace WineView2Web.Areas.Admin.Controllers
                 Value = u.Id.ToString()
             }
             );
+            wineVM.StyleList = _unitOfWork.Style.GetAll().Select(
+            u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            }
+            );
             return View(wineVM);
         }
 
@@ -124,7 +142,7 @@ namespace WineView2Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Wine> objWineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery").ToList();
+            List<Wine> objWineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery,Style").ToList();
             return Json(new { data = objWineList });
         }
 

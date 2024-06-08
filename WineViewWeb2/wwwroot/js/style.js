@@ -4,18 +4,15 @@
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/Admin/Wine/Getall' },
+        "ajax": { url: '/admin/style/getall' },
         "columns": [
             { data: 'name', "width": "25%" },
-            { data: 'color.name', "width": "15%" },
-            { data: 'winery.name', "width": "15%" },
-            { data: 'style.name', "width": "15%" },
             {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                     <a href="/admin/wine/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
-                     <a onClick=Delete('/admin/wine/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                     <a href="/admin/style/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
+                     <a onClick=Delete('/admin/style/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                     </div>`
                 },
                 "width": "25%"

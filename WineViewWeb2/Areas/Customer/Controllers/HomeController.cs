@@ -22,7 +22,7 @@ namespace WineView2Web.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Wine> wineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery");
+            IEnumerable<Wine> wineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery,Style");
             return View(wineList);
         }
         public IActionResult Details(int wineId)
@@ -31,7 +31,7 @@ namespace WineView2Web.Areas.Customer.Controllers
             {
                 Count = 1,
                 WineId = wineId,
-                Wine = _unitOfWork.Wine.Get(u => u.Id == wineId, includeProperties: "Color,Winery")
+                Wine = _unitOfWork.Wine.Get(u => u.Id == wineId, includeProperties: "Color,Winery,Style")
             };
             return View(cartObj);
         }

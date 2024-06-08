@@ -52,6 +52,13 @@
                             <span asp-validation-for="Wine.WineryId" class="text-danger"></span>
                         </div>
                         <div class="form-floating py-2 col-12">
+                            <select asp-for="@Model.Wine.StyleId" asp-items="@Model.StyleList" class="form-select border-0 shadow">
+                                <option disabled selected>--Select Style--</option>
+                            </select>
+                            <label asp-for="Wine.StyleId" class="ms-2"></label>
+                            <span asp-validation-for="Wine.StyleId" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
                             <input type="file" name="file" class="form-control border-0 shadow" />
                             <label asp-for="Wine.ImageUrl" class="ms-2"></label>
                         </div>
