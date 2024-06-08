@@ -50,6 +50,13 @@ namespace WineView2Web.Areas.Admin.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }
+                ),
+                GrapeList = _unitOfWork.Grape.GetAll().Select(
+                u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }
                 )
             };
 
@@ -61,13 +68,20 @@ namespace WineView2Web.Areas.Admin.Controllers
             else
             {
                 //update
-                wineVM.Wine = _unitOfWork.Wine.Get(u => u.Id == id);
+                wineVM.Wine = _unitOfWork.Wine.Get(u => u.Id == id, includeProperties: "Grapes");
+                wineVM.GrapeList = _unitOfWork.Grape.GetAll().Select(
+                                        u => new SelectListItem
+                                        {
+                                            Text = u.Name,
+                                            Value = u.Id.ToString(),
+                                            Selected = wineVM.Wine.Grapes.Select(g => g.Id).Contains(u.Id)
+                                        });
                 return View(wineVM);
             }
         }
 
         [HttpPost]
-        public IActionResult Upsert(WineVM wineVM, IFormFile? file)
+        public IActionResult Upsert(WineVM wineVM, IFormFile? file, string[]? grapes)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +111,26 @@ namespace WineView2Web.Areas.Admin.Controllers
                     wineVM.Wine.ImageUrl = @"\images\wine\" + fileName;
                 }
 
+                if (grapes != null)
+                {
+                    var items = _unitOfWork.Grape.GetAll().Select(
+                                u => new SelectListItem
+                                {
+                                    Text = u.Name,
+                                    Value = u.Id.ToString()
+                                }
+                                );
+                    wineVM.Wine.Grapes = new();
+                    foreach (SelectListItem item in items)
+                    {
+                        if (grapes.Contains(item.Value))
+                        {
+                            Grape grapeFromDb = _unitOfWork.Grape.Get(u => u.Id.ToString() == item.Value, tracked:true);
+                            wineVM.Wine.Grapes.Add(grapeFromDb);
+                        }
+                    }
+                }
+
                 if (wineVM.Wine.Id == 0)
                 {
                     if(wineVM.Wine.ImageUrl == null)
@@ -107,7 +141,10 @@ namespace WineView2Web.Areas.Admin.Controllers
                 }
                 else
                 {
+                    Wine wineFromDb = _unitOfWork.Wine.Get(u => u.Id == wineVM.Wine.Id, includeProperties: "Grapes", tracked:true);
+                    wineFromDb.Grapes.RemoveAll(u => true);
                     _unitOfWork.Wine.Update(wineVM.Wine);
+                    TempData["success"] = "Wine updated successfully";
                 }
                 _unitOfWork.Save();
                 TempData["success"] = "Wine created successfully";
@@ -134,6 +171,13 @@ namespace WineView2Web.Areas.Admin.Controllers
                 Value = u.Id.ToString()
             }
             );
+            wineVM.GrapeList = _unitOfWork.Grape.GetAll().Select(
+            u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString(),
+                Selected = grapes.Contains(u.Id.ToString())
+            });
             return View(wineVM);
         }
 
@@ -142,7 +186,7 @@ namespace WineView2Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Wine> objWineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery,Style").ToList();
+            List<Wine> objWineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery,Style,Grapes").ToList();
             return Json(new { data = objWineList });
         }
 

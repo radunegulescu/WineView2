@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WineView2.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using WineView2.DataAccess.Data;
 namespace WineView2.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240608131208_AddGrapes")]
+    partial class AddGrapes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,41 +245,6 @@ namespace WineView2.DataAccess.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("WineView2.Models.Body", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bodies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Light"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Medium"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Heavy"
-                        });
                 });
 
             modelBuilder.Entity("WineView2.Models.Color", b =>
@@ -560,6 +528,98 @@ namespace WineView2.DataAccess.Migrations
                     b.HasIndex("WineryId");
 
                     b.ToTable("Wines");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClasifierId = 2,
+                            ColorId = 1,
+                            ImageUrl = "",
+                            IsInClasifier = true,
+                            Name = "Fortune of Time",
+                            Price = 90.0,
+                            Price10 = 80.0,
+                            Price5 = 85.0,
+                            StyleId = 1,
+                            Volume = 2.0,
+                            WineryId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClasifierId = -1,
+                            ColorId = 1,
+                            ImageUrl = "",
+                            IsInClasifier = false,
+                            Name = "Dark Skies",
+                            Price = 30.0,
+                            Price10 = 20.0,
+                            Price5 = 25.0,
+                            StyleId = 1,
+                            Volume = 2.0,
+                            WineryId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClasifierId = -1,
+                            ColorId = 1,
+                            ImageUrl = "",
+                            IsInClasifier = false,
+                            Name = "Vanish in the Sunset",
+                            Price = 50.0,
+                            Price10 = 35.0,
+                            Price5 = 40.0,
+                            StyleId = 1,
+                            Volume = 2.0,
+                            WineryId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClasifierId = -1,
+                            ColorId = 2,
+                            ImageUrl = "",
+                            IsInClasifier = false,
+                            Name = "Cotton Candy",
+                            Price = 65.0,
+                            Price10 = 55.0,
+                            Price5 = 60.0,
+                            StyleId = 2,
+                            Volume = 2.0,
+                            WineryId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClasifierId = -1,
+                            ColorId = 2,
+                            ImageUrl = "",
+                            IsInClasifier = false,
+                            Name = "Rock in the Ocean",
+                            Price = 27.0,
+                            Price10 = 20.0,
+                            Price5 = 25.0,
+                            StyleId = 2,
+                            Volume = 2.0,
+                            WineryId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClasifierId = -1,
+                            ColorId = 3,
+                            ImageUrl = "",
+                            IsInClasifier = false,
+                            Name = "Leaves and Wonders",
+                            Price = 23.0,
+                            Price10 = 20.0,
+                            Price5 = 22.0,
+                            StyleId = 2,
+                            Volume = 2.0,
+                            WineryId = 3
+                        });
                 });
 
             modelBuilder.Entity("WineView2.Models.Winery", b =>

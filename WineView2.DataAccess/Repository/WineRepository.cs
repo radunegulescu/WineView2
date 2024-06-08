@@ -33,7 +33,7 @@ namespace WineView2.DataAccess.Repository
                 objFromDb.Volume = obj.Volume;
                 objFromDb.ClasifierId = obj.ClasifierId;
                 objFromDb.IsInClasifier = obj.IsInClasifier;
-                // objFromDb.Grapes = obj.Grapes;
+                objFromDb.Grapes = obj.Grapes;
 
                 if (obj.ImageUrl != null)
                 {

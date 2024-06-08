@@ -67,5 +67,9 @@ namespace WineView2.Models
         public bool IsInClasifier { get; set; }
 
         public int ClasifierId { get; set; } = 0;
+
+        [Display(Name = "Grapes")]
+        [ValidateNever]
+        public List<Grape> Grapes { get; set; }
     }
 }

@@ -35,6 +35,14 @@
                             <span class="badge">@Model.Wine.Style.Name</span>
                         </div>
                         <div class="row pl-2">
+                            <h5 class="text-muted">
+                                Grapes : @foreach (var grape in Model.Wine.Grapes)
+                                {
+                                    <span>@grape.Name, </span>
+                                }
+                            </h5>
+                        </div>
+                        <div class="row pl-2">
                             <h5 class="text-muted pb-2">Volume: @Model.Wine.Volume ML</h5>
                         </div>
                         <div class="row ps-2">

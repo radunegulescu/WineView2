@@ -58,6 +58,22 @@
                             <label asp-for="Wine.StyleId" class="ms-2"></label>
                             <span asp-validation-for="Wine.StyleId" class="text-danger"></span>
                         </div>
+                        <div class="mb-3 col-6">
+                            <label asp-for="Wine.Grapes"></label>
+                            <table>
+                                @foreach (var grape in Model.GrapeList)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input id="@grape.Value" type="checkbox" name="grapes" value="@grape.Value" checked="@grape.Selected" />
+                                        </td>
+                                        <td>
+                                            <label for="@grape.Value">@grape.Text</label>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
                         <div class="mb-3 col-12">
                             <label asp-for="Wine.Volume"></label>(ML)
                             <input asp-for="Wine.Volume" class="form-control" />
@@ -81,18 +97,18 @@
                             </div>
                         }
                         <div class="form-floating py-2 col-12">
-                            <input type="file" name="file" class="form-control border-0 shadow" />
+                            <input type="file" id="uploadBox" name="file" class="form-control border-0 shadow" />
                             <label asp-for="Wine.ImageUrl" class="ms-2"></label>
                         </div>
                         <div class="row pt-2">
                             <div class="col-6 col-md-3">
                                 @if (Model.Wine.Id != 0)
                                 {
-                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                    <button type="submit" onclick="return ValidateInput2()" class="btn btn-primary" style="width:150px">Update</button>
                                 }
                                 else
                                 {
-                                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
                                 }
                             </div>
                             <div class="col-6 col-md-3">
@@ -124,6 +140,55 @@
                 $('#Input_ClasifierId').hide();
             })
         })
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please upload an Image!',
+                });
+                return false;
+            }
+            var ok = false;
+            @foreach (var grape in Model.GrapeList)
+            {
+                <text>
+                    if (document.getElementById(@grape.Value).checked == true) {
+                        ok = true;
+                    }
+                </text>
+            }
+                if (ok == false) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please select a Grape!',
+                    });
+                    return false;
+                }
+
+                return true;
+        }
+        function ValidateInput2() {
+            var ok = false;
+            @foreach (var grape in Model.GrapeList)
+            {
+                <text>
+                    if (document.getElementById(@grape.Value).checked == true) {
+                        ok = true;
+                    }
+                </text>
+            }
+                if (ok == false) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please select a Grape!',
+                    });
+                    return false;
+                }
+                return true;
+        }
     </script>
 }
 
