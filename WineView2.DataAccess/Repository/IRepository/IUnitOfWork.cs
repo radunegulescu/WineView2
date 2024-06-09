@@ -18,6 +18,7 @@ namespace WineView2.DataAccess.Repository.IRepository
         IStyleRepository Style { get; }
         IGrapeRepository Grape { get; }
         IBodyRepository Body { get; }
+        IReviewRepository Review { get; }
 
         void Save();
     }

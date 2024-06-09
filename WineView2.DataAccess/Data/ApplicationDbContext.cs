@@ -21,6 +21,7 @@ namespace WineView2.DataAccess.Data
         public DbSet<Style> Styles { get; set; }
         public DbSet<Grape> Grapes { get; set; }
         public DbSet<Body> Bodies { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,0 +1,83 @@
+﻿@model WineView2.Models.ViewModels.ReviewVM
+<div class="row">
+    <div class="col col-md-7">
+        <form method="post" asp-action="Upsert" enctype="multipart/form-data">
+            <input asp-for="Review.Id" hidden />
+            <input asp-for="Review.ApplicationUserId" hidden />
+            <input asp-for="Review.WineId" hidden />
+
+            <div class="col">
+                <div class="border p-3 mt-4 row">
+                    <div class="col-12 pb-2">
+                        <h2 class="text-primary">@(Model.Review.Id != 0 ? "Update": "Create") Review</h2>
+                        <hr />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Review.Text"></label>
+                        <input asp-for="Review.Text" class="form-control" />
+                        <span asp-validation-for="Review.Text" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label asp-for="Review.Sweetness"></label>
+                        <input asp-for="Review.Sweetness" class="form-control" />
+                        <span asp-validation-for="Review.Sweetness" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label asp-for="Review.Acidity"></label>
+                        <input asp-for="Review.Acidity" class="form-control" />
+                        <span asp-validation-for="Review.Acidity" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label asp-for="Review.Tannin"></label>
+                        <input asp-for="Review.Tannin" class="form-control" />
+                        <span asp-validation-for="Review.Tannin" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label asp-for="Review.BodyId"></label>
+                        <select asp-for="Review.BodyId" asp-items="@Model.BodyList" class="form-select">
+                            <option disabled selected>--Select Body--</option>
+                        </select>
+                        <span asp-validation-for="Review.BodyId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        @if (Model.Review.Id != 0)
+                        {
+                            <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+
+                        }
+                        <br />
+                        <a asp-controller="Review" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                            Your Reviews
+                        </a>
+                        <a asp-controller="Home" asp-action="Details" asp-route-wineId="@Model.Review.WineId" class="btn btn-secondary" style="width:150px">
+                            Back to Wine
+                        </a>
+                        <a asp-controller="Review" asp-action="WineReviews" asp-route-id="@Model.Review.WineId" class="btn btn-secondary" style="width:200px">
+                            Back to Wine Reviews
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col col-md-5">
+        <br />
+        <div>
+            <h1 class="text-black-50">@ViewBag.Wine.Name</h1>
+        </div>
+        <div class="col-lg-6 offset-lg-1 text-center">
+            <img src="@ViewBag.Wine.ImageUrl" width="100%" class="rounded" />
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }

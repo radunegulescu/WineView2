@@ -2,106 +2,126 @@
 
 <form method="post">
     <input hidden asp-for="WineId" />
-    <div class="card shadow border-0 mt-4 mb-4">
-        <div class="card-header bg-secondary bg-gradient text-light py-4">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">@Model.Wine.Name</h3>
-                </div>
+    <div class="card  container pt-4">
+        <div class="card-header bg-primary text-light ml-0  row ">
+            <div class="col-12 col-md-6">
+                <h1 class="text-black-50">@Model.Wine.Name</h1>
+                <h3 class="text-warning">@Model.Wine.Winery.Name</h3>
+            </div>
+            <div class="col-12 col-md-6 text-end pt-4">
+                <span class="badge bg-info pt-2"><h4>@Model.Wine.Style.Name</h4></span>
+                <span class="badge bg-warning pt-2"><h4>@Model.Wine.Color.Name</h4></span>
             </div>
         </div>
-        <div class="card-body">
-            <div class="py-3">
+        <div class="card-body row container">
+            <div class="container rounded p-2">
                 <div class="row">
-                    <div class="col-6 col-md-2 offset-lg-1 pb-1">
-                        <a asp-action="Index" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm text-uppercase">
-                            <small>Back to home</small>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
-                        <img src="@Model.Wine.ImageUrl" width="100%" class="rounded" />
-                    </div>
-                    <div class="col-12 col-lg-6 offset-lg-1">
-
-                        <div class="col-12 col-md-6 pb-4">
-                            <span class="badge">@Model.Wine.Color.Name</span>
-                        </div>
-                        <div class="col-12 col-md-6 pb-4">
-                            <span class="badge">@Model.Wine.Winery.Name</span>
-                        </div>
-                        <div class="col-12 col-md-6 pb-4">
-                            <span class="badge">@Model.Wine.Style.Name</span>
-                        </div>
-                        <div class="row pl-2">
-                            <h5 class="text-muted">
-                                Grapes : @foreach (var grape in Model.Wine.Grapes)
-                                {
-                                    <span>@grape.Name, </span>
-                                }
-                            </h5>
-                        </div>
-                        <div class="row pl-2">
-                            <h5 class="text-muted pb-2">Volume: @Model.Wine.Volume ML</h5>
-                        </div>
-                        <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50  pb-2">
-                                Price:
-                                <span class="text-decoration-line-through">
-                                    @Model.Wine.Price.ToString("c")
-                                </span>
-                            </h6>
-                        </div>
-                        <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">Quantity</div>
+                    <div class="col-7 col-lg-8">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row pl-2">
+                                    <h5 class="text-muted">
+                                        Grapes : @foreach (var grape in Model.Wine.Grapes)
+                                        {
+                                            <span>@grape.Name, </span>
+                                        }
+                                    </h5>
+                                </div>
+                                <div class="row pl-2">
+                                    <h5 class="text-muted pb-2">Price: @Model.Wine.Price.ToString("c")</h5>
+                                </div>
+                                <div class="row pl-2">
+                                    <h5 class="text-muted pb-2">Volume: @Model.Wine.Volume ML</h5>
+                                </div>
+                                <div class="row pl-2">
+                                    <h5 class="text-muted pb-2">Region: @Model.Wine.Winery.Region</h5>
+                                </div>
                             </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">1-5</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">6-10</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                                <div class="text-dark text-opacity-50 fw-semibold">10+</div>
-                            </div>
-                        </div>
-                        <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>Price</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>@Model.Wine.Price.ToString("c")</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>@Model.Wine.Price5.ToString("c")</div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                <div>@Model.Wine.Price10.ToString("c")</div>
-                            </div>
-                        </div>
-                        <div class="row pl-2 mb-3">
-                            <div class="col-md-4">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold"
-                                          id="inputGroup-sizing-default">
-                                        Count
-                                    </span>
-                                    <input asp-for="Count" type="number" value="1" class="form-control text-end"
-                                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                            <div class="col-6">
+                                <div class="row pl-2">
+                                    <h5 class="text-muted pb-2">
+                                        Sweetness: @if (ViewBag.Sweetness != null)
+                                        {
+                                            @ViewBag.Sweetness
+                                        }
+                                    </h5>
+                                </div>
+                                <div class="row pl-2">
+                                    <h5 class="text-muted pb-2">
+                                        Acidity: @if (ViewBag.Acidity != null)
+                                        {
+                                            @ViewBag.Acidity
+                                        }
+                                    </h5>
+                                </div>
+                                <div class="row pl-2">
+                                    <h5 class="text-muted pb-2">
+                                        Tannin: @if (ViewBag.Tannin != null)
+                                        {
+                                            @ViewBag.Tannin
+                                        }
+                                    </h5>
+                                </div>
+                                <div class="row pl-2">
+                                    <h5 class="text-muted pb-2">
+                                        Body: @if (ViewBag.Body != null)
+                                        {
+                                            @ViewBag.Body.Name
+                                        }
+                                    </h5>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" 
-                                        class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
-                                    Add to Cart
-                                </button>
+                        <div class="row text-center pl-2">
+                            <div class="p-1 col-2 bg-secondary border-bottom">
+                                <div>Quantity</div>
+                            </div>
+                            <div class="p-1 col-2 bg-secondary border-bottom">
+                                <div>1-5</div>
+                            </div>
+                            <div class="p-1 col-2 bg-secondary border-bottom">
+                                <div>6-10</div>
+                            </div>
+                            <div class="p-1 col-2 bg-secondary border-bottom">
+                                <div>10+</div>
                             </div>
                         </div>
+                        <div class="row text-center pl-2" style="color:maroon; font-weight:bold">
+                            <div class="p-1 col-2 bg-secondary">
+                                <div>Price</div>
+                            </div>
+                            <div class="p-1 col-2 bg-secondary">
+                                <div>@Model.Wine.Price.ToString("c")</div>
+                            </div>
+                            <div class="p-1 col-2 bg-secondary">
+                                <div>@Model.Wine.Price5.ToString("c")</div>
+                            </div>
+                            <div class="p-1 col-2 bg-secondary">
+                                <div>@Model.Wine.Price10.ToString("c")</div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row pl-2">
+                            <div class="col-2 text-primary"><h4>Count</h4></div>
+                            <div class="col-10"><input asp-for="Count" class="form-control" /></div>
+                        </div>
                     </div>
+                    <div class="col-12 col-lg-3 offset-lg-1 text-center">
+                        <img src="@Model.Wine.ImageUrl" width="100%" class="rounded" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-12 col-md-4 pb-1">
+                    <a class="btn btn-primary form-control " style="height:50px;" asp-action="Index">Back to Home</a>
+                </div>
+                <div class="col-12 col-md-4 pb-1">
+                    <a class="btn btn-primary form-control " style="height:50px;" asp-area="Customer" asp-controller="Review" asp-action="WineReviews" asp-route-id="@Model.Wine.Id">Reviews</a>
+                </div>
+                <div class="col-12 col-md-4 pb-1">
+                    <button type="submit" value="Add to Cart" class="btn btn-success form-control" style="height:50px;">Add to Cart</button>
                 </div>
             </div>
         </div>

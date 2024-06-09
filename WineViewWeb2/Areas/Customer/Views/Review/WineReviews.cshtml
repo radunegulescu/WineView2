@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Review>
+<br />
+<a asp-action="Details" asp-controller="Home" asp-route-wineId="@ViewBag.WineId" class="btn btn-primary form-control">Back to Wine</a>
+@if (ViewBag.YourReview != null)
+{
+    <br />
+    <br />
+    <h4>Your Review:</h4> 
+    <div class="row p-2">
+        <div class="col-12 p-1" style="border:1px solid #008cba; border-radius: 5px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="pl-1">
+                        <p class="card-text h5 text-primary">@ViewBag.YourReview.Text</p>
+                    </div>
+                    <br />
+                    <div class="pl-1">
+                        <p>Sweetness: <b>@ViewBag.YourReview.Sweetness</b></p>
+                    </div>
+                    <div class="pl-1">
+                        <p>Acidity: <b>@ViewBag.YourReview.Acidity</b></p>
+                    </div>
+                    <div class="pl-1">
+                        <p>Tannin: <b>@ViewBag.YourReview.Tannin</b></p>
+                    </div>
+                    <div class="pl-1">
+                        <p>Body: <b>@ViewBag.YourReview.Body.Name</b></p>
+                    </div>
+                    <div class="pl-1">
+                        <p>Wine: <b>@ViewBag.YourReview.Wine.Name</b></p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a asp-action="Upsert" class="btn btn-primary form-control" asp-route-wineId="@ViewBag.YourReview.Wine.Id">
+                    Edit Review
+                </a>
+                <a asp-action="Delete" class="btn btn-danger form-control" asp-route-id="@ViewBag.YourReview.Id">
+                    Delete Review
+                </a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <br />
+    <br />
+    <div class="col-6 text-end d-flex justify-content-between">
+        <a asp-action="Upsert" asp-route-wineId="@ViewBag.WineId" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> &nbsp; Add Review
+        </a>
+    </div>
+}
+
+<br />
+<div class="row pb-3">
+    <h4>Customer Reviews:</h4> 
+    @foreach (var review in Model)
+    {
+        <div class="col-lg-3 col-md-6">
+            <div class="row p-2">
+                <div class="col-12 p-1" style="border:1px solid #008cba; border-radius: 5px;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="pl-1">
+                                <p>Review By: <b>@review.ApplicationUser.Name</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p class="card-text h5 text-primary">@review.Text</p>
+                            </div>
+                            <br />
+                            <div class="pl-1">
+                                <p>Sweetness: <b>@review.Sweetness</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p>Acidity: <b>@review.Acidity</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p>Tannin: <b>@review.Tannin</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p>Body: <b>@review.Body.Name</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p>Wine: <b>@review.Wine.Name</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

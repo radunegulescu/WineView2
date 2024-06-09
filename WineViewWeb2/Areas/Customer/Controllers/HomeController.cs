@@ -33,6 +33,16 @@ namespace WineView2Web.Areas.Customer.Controllers
                 WineId = wineId,
                 Wine = _unitOfWork.Wine.Get(u => u.Id == wineId, includeProperties: "Color,Winery,Style,Grapes")
             };
+            var reviews = _unitOfWork.Review.GetAll(u => u.WineId == wineId, includeProperties: "Body");
+            if (reviews.Any())
+            {
+                ViewBag.Sweetness = (double)reviews.Select(u => u.Sweetness).Sum() / (double)reviews.Count();
+                ViewBag.Acidity = (double)reviews.Select(u => u.Acidity).Sum() / (double)reviews.Count();
+                ViewBag.Tannin = (double)reviews.Select(u => u.Tannin).Sum() / (double)reviews.Count();
+                ViewBag.Body = reviews.Select(u => u.Body).GroupBy(s => s)
+                             .OrderByDescending(s => s.Count())
+                             .First().Key;
+            }
             return View(cartObj);
         }
 
