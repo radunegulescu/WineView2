@@ -1,44 +1,50 @@
 ﻿@model IEnumerable<Wine>
 
+<form method="post" asp-action="Index">
+    <div class="mb-3 col-6">
+        <h4><label>Search Wine</label></h4>
+        <input type="text" name="searchedWine" value="@ViewBag.SearchedWine" class="form-control" />
+        <br />
+        <button type="submit" class="btn btn-primary" style="width:150px">Search</button>
+    </div>
+</form>
+<span>
+    <a class="btn btn-primary" asp-area="Customer" asp-controller="Home" asp-action="Index">Reset Search</a>
+</span>
+
 <div class="row pb-3">
     @foreach (var wine in Model)
     {
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-3 col-md-6">
             <div class="row p-2">
                 <div class="col-12 p-1">
                     <div class="card border-0 p-3 shadow  border-top border-5 rounded">
-                        <img src="@wine.ImageUrl" class="card-img-top rounded" />
-                        <div class="card-body pb-0">
+                        <img height="300" src="@wine.ImageUrl" class="card-img-top rounded" />
+                        <div class="card-body">
                             <div class="pl-1">
-                                <p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@wine.Name</p>
+                                <p class="card-title h5 text-primary">@wine.Name, @wine.Color.Name, @wine.Style.Name</p>
+                                <p class="card-title text-info"><b>@wine.Winery.Name</b></p>
                             </div>
                             <div class="pl-1">
-                                <p class="text-dark text-opacity-75 text-center mb-0">
-                                    List Price:
-                                    <span class="text-decoration-line-through">
-                                        @wine.Price.ToString("c")
-                                    </span>
-                                </p>
+                                <p>Price: <strike><b>@wine.Price.ToString("c")</b></strike></p>
                             </div>
                             <div class="pl-1">
-                                <p class="text-dark text-opacity-75 text-center">
-                                    As low as:
-                                    <span>
-                                        @wine.Price10.ToString("c")
-                                    </span>
-                                </p>
+                                <p>As low as: <b>@wine.Price10.ToString("c")</b></p>
                             </div>
                         </div>
+                    </div>
+                    @if (!User.IsInRole(SD.Role_Producer))
+                    {
                         <div>
-                            <a asp-action="Details"
-                               asp-route-wineId="@wine.Id"
-                               class="btn btn-primary bg-gradient border-0 form-control">
+                            <a asp-action="Details" class="btn btn-primary form-control" asp-route-wineId="@wine.Id">
                                 Details
                             </a>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
     }
 </div>
+
+

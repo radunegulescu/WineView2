@@ -20,11 +20,27 @@ namespace WineView2Web.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? searchedWine)
         {
-            IEnumerable<Wine> wineList = _unitOfWork.Wine.GetAll(includeProperties: "Color,Winery,Style,Grapes");
+            IEnumerable<Wine> wineList = _unitOfWork.Wine.GetAll(includeProperties: "Winery,Color,Style,Grapes");
+            if (searchedWine != null)
+            {
+                wineList = wineList.Where(u => u.Name.ToUpper().Contains(searchedWine.ToUpper()) ||
+                                               u.Winery.Name.ToUpper().Contains(searchedWine.ToUpper()) ||
+                                               u.Style.Name.ToUpper().Contains(searchedWine.ToUpper()) ||
+                                               u.Color.Name.ToUpper().Contains(searchedWine.ToUpper()));
+            }
+            ViewBag.SearchedWine = searchedWine;
             return View(wineList);
         }
+
+        [HttpPost, ActionName("Index")]
+        [ValidateAntiForgeryToken]
+        public IActionResult IndexPOST(string searchedWine)
+        {
+            return RedirectToAction("Index", "Home", new { searchedWine = searchedWine });
+        }
+
         public IActionResult Details(int wineId)
         {
             ShoppingCart cartObj = new()
@@ -47,6 +63,7 @@ namespace WineView2Web.Areas.Customer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
