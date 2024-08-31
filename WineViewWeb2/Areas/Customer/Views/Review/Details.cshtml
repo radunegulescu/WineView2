@@ -1,0 +1,60 @@
+﻿@model Review
+
+<form method="post" asp-action="Delete">
+    <input asp-for="Id" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Review Details</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label class="pb-1" asp-for="Text"></label>
+            <div>
+                <textarea class="form-control big-text-box" readonly>@Model.Text</textarea>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Wine.FullName"></label>
+            <input asp-for="Wine.FullName" disabled class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Sweetness"></label>
+            <input asp-for="Sweetness" disabled class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Acidity"></label>
+            <input asp-for="Acidity" disabled class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Tannin"></label>
+            <input asp-for="Tannin" disabled class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Body.Name"></label>
+            <input asp-for="Body.Name" disabled class="form-control" />
+        </div>        
+        @if (ViewBag.IsCreatorPage != null)
+        {
+            <div class="mb-3">
+                <label asp-for="SentimentScore"></label>(0-10)
+                <input asp-for="SentimentScore" disabled class="form-control" />
+            </div>
+
+            <a asp-controller="Review" asp-action="CreatorReviews" class="btn btn-secondary" style="width:150px">
+                Back to List
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Review" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                Back to List
+            </a>
+        }
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

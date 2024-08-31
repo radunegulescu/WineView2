@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Review>
+
+@{
+    var bad = "text-primary";
+    var good = "text-primary";
+    var excellent = "text-primary";
+    var all = "text-primary";
+
+    switch (ViewBag.Filter)
+    {
+        case "bad":
+            bad = "active text-white bg-primary";
+            break;
+        case "good":
+            good = "active text-white bg-primary";
+            break;
+        case "excellent":
+            excellent = "active text-white bg-primary";
+            break;
+        default:
+            all = "active text-white bg-primary";
+            break;
+    }
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Created Wines Reviews</h2>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between pb-5 pt-2">
+        <span></span>
+        <ul class="list-group list-group-horizontal-sm">
+            <a style="text-decoration:none;" asp-controller="Review" asp-action="CreatorReviews" asp-route-filter="bad">
+            <li class="list-group-item @bad">Bad Reviews</li>
+            </a>
+            <a style="text-decoration:none;" asp-controller="Review" asp-action="CreatorReviews" asp-route-filter="good">
+            <li class="list-group-item @good">Good Reviews</li>
+            </a>
+            <a style="text-decoration:none;" asp-controller="Review" asp-action="CreatorReviews" asp-route-filter="excellent">
+            <li class="list-group-item @excellent">Excellent Reviews</li>
+            </a>
+            <a style="text-decoration:none;" asp-controller="Review" asp-action="CreatorReviews" asp-route-filter="all">
+            <li class="list-group-item @all">All</li>
+            </a>
+        </ul>
+    </div>
+
+    <div class="row pb-3">
+        @foreach (var review in Model)
+        {
+            <div class="col-lg-3 col-md-6">
+                <div class="row p-2">
+                    <div class="col-12 p-1">
+                        <div class="card border-0 p-3 shadow  border-top border-5 rounded">
+                            <div class="card-body">
+                                <div class="pl-1">
+                                    <p class="card-text h5 text-primary">@review.Text</p>
+                                </div>
+                                <br />
+                                <div class="pl-1">
+                                    <p>Wine: <b>@review.Wine.FullName</b></p>
+                                </div>
+                                <div class="pl-1">
+                                    <p>Sentiment Score(0-10): <b>@review.SentimentScore</b></p>
+                                </div>
+                                <div class="pl-1">
+                                    <p>Sweetness: <b>@review.Sweetness</b></p>
+                                </div>
+                                <div class="pl-1">
+                                    <p>Acidity: <b>@review.Acidity</b></p>
+                                </div>
+                                <div class="pl-1">
+                                    <p>Tannin: <b>@review.Tannin</b></p>
+                                </div>
+                                <div class="pl-1">
+                                    <p>Body: <b>@review.Body.Name</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="pb-1">
+                                <a asp-action="Details" class="btn btn-primary form-control" asp-route-id="@review.Id" asp-route-isCreatorPage="true">
+                                    Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

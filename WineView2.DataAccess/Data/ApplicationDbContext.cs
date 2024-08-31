@@ -51,6 +51,12 @@ namespace WineView2.DataAccess.Data
                 new Body { Id = 2, Name = "Medium" },
                 new Body { Id = 3, Name = "Heavy" }
                 );
+
+            modelBuilder.Entity<Wine>()
+           .HasOne(w => w.Creator)
+           .WithMany()
+           .HasForeignKey(w => w.ApplicationUserId)
+           .OnDelete(DeleteBehavior.NoAction);
             /*            modelBuilder.Entity<Wine>().HasData(
                             new Wine
                             {

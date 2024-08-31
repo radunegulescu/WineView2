@@ -17,6 +17,9 @@ namespace WineView2.Models
         [Required]
         public string Name { get; set; }
 
+        [ValidateNever]
+        public string FullName { get; set; }   
+
         [Required]
         [Display(Name = "Price for 1-5")]
         [Range(1, 10000)]
@@ -71,5 +74,12 @@ namespace WineView2.Models
         [Display(Name = "Grapes")]
         [ValidateNever]
         public List<Grape> Grapes { get; set; }
+
+        [ValidateNever]
+        public string ApplicationUserId { get; set; }
+
+        [ForeignKey("ApplicationUserId")]
+        [ValidateNever]
+        public ApplicationUser Creator { get; set; }
     }
 }

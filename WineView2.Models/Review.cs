@@ -33,6 +33,10 @@ namespace WineView2.Models
         [ValidateNever]
         public Body Body { get; set; }
 
+        [ValidateNever]
+        [Display(Name = "Sentiment Score")]
+        public double SentimentScore { get; set; }
+
         [Required]
         [Display(Name = "User")]
         public string ApplicationUserId { get; set; }

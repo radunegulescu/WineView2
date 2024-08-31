@@ -13,6 +13,9 @@
                             </div>
                             <br />
                             <div class="pl-1">
+                                <p>Wine: <b>@review.Wine.FullName</b></p>
+                            </div>
+                            <div class="pl-1">
                                 <p>Sweetness: <b>@review.Sweetness</b></p>
                             </div>
                             <div class="pl-1">
@@ -24,12 +27,14 @@
                             <div class="pl-1">
                                 <p>Body: <b>@review.Body.Name</b></p>
                             </div>
-                            <div class="pl-1">
-                                <p>Wine: <b>@review.Wine.Name</b></p>
-                            </div>
                         </div>
                     </div>
                     <div>
+                        <div class="pb-1">
+                            <a asp-action="Details" class="btn btn-primary form-control" asp-route-id="@review.Id">
+                                Details
+                            </a>
+                        </div>
                         <a asp-action="Upsert" class="btn btn-primary form-control" asp-route-wineId="@review.Wine.Id">
                             Edit Review
                         </a>

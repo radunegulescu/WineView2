@@ -12,8 +12,8 @@ using WineView2.DataAccess.Data;
 namespace WineView2.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240530202634_AddOrderHeaderAndDetailToDb")]
-    partial class AddOrderHeaderAndDetailToDb
+    [Migration("20240731142101_FreshMigration")]
+    partial class FreshMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace WineView2.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("GrapeWine", b =>
+                {
+                    b.Property<int>("GrapesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WinesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GrapesId", "WinesId");
+
+                    b.HasIndex("WinesId");
+
+                    b.ToTable("GrapeWine");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -232,6 +247,41 @@ namespace WineView2.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WineView2.Models.Body", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bodies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Light"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Medium"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Heavy"
+                        });
+                });
+
             modelBuilder.Entity("WineView2.Models.Color", b =>
                 {
                     b.Property<int>("Id")
@@ -264,6 +314,41 @@ namespace WineView2.DataAccess.Migrations
                         {
                             Id = 3,
                             Name = "White"
+                        });
+                });
+
+            modelBuilder.Entity("WineView2.Models.Grape", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Grapes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Merlot"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Syrah"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Airen"
                         });
                 });
 
@@ -345,6 +430,9 @@ namespace WineView2.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ShippingDate")
                         .HasColumnType("datetime2");
 
@@ -364,6 +452,51 @@ namespace WineView2.DataAccess.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("OrderHeaders");
+                });
+
+            modelBuilder.Entity("WineView2.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Acidity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("BodyId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SentimentScore")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Sweetness")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Tannin")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WineId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("BodyId");
+
+                    b.HasIndex("WineId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("WineView2.Models.ShoppingCart", b =>
@@ -393,6 +526,36 @@ namespace WineView2.DataAccess.Migrations
                     b.ToTable("ShoppingCarts");
                 });
 
+            modelBuilder.Entity("WineView2.Models.Style", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Styles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dry"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Sweet"
+                        });
+                });
+
             modelBuilder.Entity("WineView2.Models.Wine", b =>
                 {
                     b.Property<int>("Id")
@@ -401,12 +564,18 @@ namespace WineView2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ClasifierId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsInClasifier")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -421,72 +590,64 @@ namespace WineView2.DataAccess.Migrations
                     b.Property<double>("Price5")
                         .HasColumnType("float");
 
+                    b.Property<int>("StyleId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
+
+                    b.Property<int>("WineryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
 
+                    b.HasIndex("StyleId");
+
+                    b.HasIndex("WineryId");
+
                     b.ToTable("Wines");
+                });
+
+            modelBuilder.Entity("WineView2.Models.Winery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Wineries");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            ColorId = 1,
-                            ImageUrl = "",
-                            Name = "Fortune of Time",
-                            Price = 90.0,
-                            Price10 = 80.0,
-                            Price5 = 85.0
+                            Name = "Cotnari",
+                            Region = "Muntenia"
                         },
                         new
                         {
                             Id = 2,
-                            ColorId = 1,
-                            ImageUrl = "",
-                            Name = "Dark Skies",
-                            Price = 30.0,
-                            Price10 = 20.0,
-                            Price5 = 25.0
+                            Name = "Purcari",
+                            Region = "Oltenia"
                         },
                         new
                         {
                             Id = 3,
-                            ColorId = 1,
-                            ImageUrl = "",
-                            Name = "Vanish in the Sunset",
-                            Price = 50.0,
-                            Price10 = 35.0,
-                            Price5 = 40.0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ColorId = 2,
-                            ImageUrl = "",
-                            Name = "Cotton Candy",
-                            Price = 65.0,
-                            Price10 = 55.0,
-                            Price5 = 60.0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ColorId = 2,
-                            ImageUrl = "",
-                            Name = "Rock in the Ocean",
-                            Price = 27.0,
-                            Price10 = 20.0,
-                            Price5 = 25.0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ColorId = 3,
-                            ImageUrl = "",
-                            Name = "Leaves and Wonders",
-                            Price = 23.0,
-                            Price10 = 20.0,
-                            Price5 = 22.0
+                            Name = "Jidvei",
+                            Region = "Moldova"
                         });
                 });
 
@@ -511,6 +672,21 @@ namespace WineView2.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("GrapeWine", b =>
+                {
+                    b.HasOne("WineView2.Models.Grape", null)
+                        .WithMany()
+                        .HasForeignKey("GrapesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WineView2.Models.Wine", null)
+                        .WithMany()
+                        .HasForeignKey("WinesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -594,6 +770,33 @@ namespace WineView2.DataAccess.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("WineView2.Models.Review", b =>
+                {
+                    b.HasOne("WineView2.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WineView2.Models.Body", "Body")
+                        .WithMany()
+                        .HasForeignKey("BodyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WineView2.Models.Wine", "Wine")
+                        .WithMany()
+                        .HasForeignKey("WineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Body");
+
+                    b.Navigation("Wine");
+                });
+
             modelBuilder.Entity("WineView2.Models.ShoppingCart", b =>
                 {
                     b.HasOne("WineView2.Models.ApplicationUser", "ApplicationUser")
@@ -621,7 +824,23 @@ namespace WineView2.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WineView2.Models.Style", "Style")
+                        .WithMany()
+                        .HasForeignKey("StyleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WineView2.Models.Winery", "Winery")
+                        .WithMany()
+                        .HasForeignKey("WineryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Color");
+
+                    b.Navigation("Style");
+
+                    b.Navigation("Winery");
                 });
 #pragma warning restore 612, 618
         }

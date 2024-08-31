@@ -29,46 +29,57 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Review" asp-action="Index">
-                                Reviews
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Order</a>
-                        </li>
-                        @if (User.IsInRole(SD.Role_Admin))
+                        @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Producer) || User.IsInRole(SD.Role_User))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Review" asp-action="Index">Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Order</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Classify">Detect Wines</a>
+                            </li>
+                        }
+                        @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Producer))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Review" asp-action="CreatorReviews">Wine Reviews</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Content Management
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Color" asp-action="Index">Color</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Wine" asp-action="Index">Wine</a>
                                     </li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Winery" asp-action="Index">Winery</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Style" asp-action="Index">Style</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Grape" asp-action="Index">Grape</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Body" asp-action="Index">Body</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Manage User</a>
-                                    </li>
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="Color" asp-action="Index">Color</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="Style" asp-action="Index">Style</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="Body" asp-action="Index">Body</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Manage User</a>
+                                        </li>
+                                    }
                                 </ul>
                             </li>
                         }

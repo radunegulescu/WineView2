@@ -12,8 +12,8 @@ using WineView2.DataAccess.Data;
 namespace WineView2.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240608152753_AddBodyToDb")]
-    partial class AddBodyToDb
+    [Migration("20240803185311_addFullNameToWine")]
+    partial class addFullNameToWine
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -454,6 +454,51 @@ namespace WineView2.DataAccess.Migrations
                     b.ToTable("OrderHeaders");
                 });
 
+            modelBuilder.Entity("WineView2.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Acidity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("BodyId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SentimentScore")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Sweetness")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Tannin")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WineId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("BodyId");
+
+                    b.HasIndex("WineId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("WineView2.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -519,11 +564,19 @@ namespace WineView2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("ClasifierId")
                         .HasColumnType("int");
 
                     b.Property<int>("ColorId")
                         .HasColumnType("int");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -555,6 +608,8 @@ namespace WineView2.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ColorId");
 
@@ -725,6 +780,33 @@ namespace WineView2.DataAccess.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("WineView2.Models.Review", b =>
+                {
+                    b.HasOne("WineView2.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WineView2.Models.Body", "Body")
+                        .WithMany()
+                        .HasForeignKey("BodyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WineView2.Models.Wine", "Wine")
+                        .WithMany()
+                        .HasForeignKey("WineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Body");
+
+                    b.Navigation("Wine");
+                });
+
             modelBuilder.Entity("WineView2.Models.ShoppingCart", b =>
                 {
                     b.HasOne("WineView2.Models.ApplicationUser", "ApplicationUser")
@@ -746,6 +828,12 @@ namespace WineView2.DataAccess.Migrations
 
             modelBuilder.Entity("WineView2.Models.Wine", b =>
                 {
+                    b.HasOne("WineView2.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("WineView2.Models.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId")
@@ -765,6 +853,8 @@ namespace WineView2.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Color");
+
+                    b.Navigation("Creator");
 
                     b.Navigation("Style");
 

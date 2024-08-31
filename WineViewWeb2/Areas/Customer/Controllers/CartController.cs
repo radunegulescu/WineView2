@@ -116,7 +116,7 @@ namespace WineView2Web.Areas.Customer.Controllers
 				_unitOfWork.Save();
 			}
 
-            //stripe logic
+            //stripe
             var domain = Request.Scheme + "://" + Request.Host.Value + "/";
             var options = new SessionCreateOptions
             {
@@ -132,11 +132,11 @@ namespace WineView2Web.Areas.Customer.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)(item.Price * 100), // $20.50 => 2050
-                        Currency = "usd",
+                        UnitAmount = (long)(item.Price * 100), // Ron14.70 => 1470
+                        Currency = "ron",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = item.Wine.Name
+                            Name = item.Wine.FullName
                         }
                     },
                     Quantity = item.Count

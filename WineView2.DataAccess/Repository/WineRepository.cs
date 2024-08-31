@@ -34,6 +34,7 @@ namespace WineView2.DataAccess.Repository
                 objFromDb.ClasifierId = obj.ClasifierId;
                 objFromDb.IsInClasifier = obj.IsInClasifier;
                 objFromDb.Grapes = obj.Grapes;
+                objFromDb.FullName = obj.FullName;
 
                 if (obj.ImageUrl != null)
                 {

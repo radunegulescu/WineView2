@@ -5,24 +5,25 @@
 namespace WineView2.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSessionIdToOrderHeader : Migration
+    public partial class addFullNameToWine : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "SessionId",
-                table: "OrderHeaders",
+                name: "FullName",
+                table: "Wines",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "SessionId",
-                table: "OrderHeaders");
+                name: "FullName",
+                table: "Wines");
         }
     }
 }
