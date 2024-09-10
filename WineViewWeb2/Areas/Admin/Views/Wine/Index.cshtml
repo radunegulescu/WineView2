@@ -7,6 +7,10 @@
         </div>
     </div>
     <div class="card-body p-4">
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="position-absolute top-50 start-50 translate-middle" style="display: none;">
+            <div class="spinner"></div>
+        </div>
         <div class="row pb-3">
             <div class="col-6">
             </div>
@@ -36,5 +40,38 @@
 </div>
 
 @section Scripts {
+    <style>
+        .spinner {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loadingSpinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1050; /* Higher than typical Bootstrap elements */
+            background-color: rgba(255, 255, 255, 0.8); /* Optional: add a semi-transparent background */
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+
+
     <script src="~/js/wine.js"></script>
 }

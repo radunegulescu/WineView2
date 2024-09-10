@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using System.Text;
 using WineView2.DataAccess.Repository.IRepository;
@@ -16,10 +18,13 @@ namespace WineView2Web.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public WineController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly string _storageConnectionString;
+
+        public WineController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _storageConnectionString = configuration.GetConnectionString("AzureStorage");
         }
 
         public IActionResult Index()
@@ -215,6 +220,47 @@ namespace WineView2Web.Areas.Admin.Controllers
             return View(wineVM);
         }
 
+/*        [HttpGet]
+        public async Task<IActionResult> Forecast(int? id)
+        {
+            string url = $"http://localhost:5002/wine_data?wineId={id}";
+
+            using HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string zipFileName = await response.Content.ReadAsStringAsync();
+                // Azure Blob Storage connection details
+                string connectionString = "Your_Azure_Storage_Connection_String";
+                string containerName = "forecast";
+
+                // Create a BlobServiceClient
+                BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+
+                // Get a reference to the container
+                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+                // Get a reference to the blob (file)
+                BlobClient blobClient = containerClient.GetBlobClient(zipFileName);
+
+                // Download the blob to a MemoryStream
+                MemoryStream memoryStream = new MemoryStream();
+                await blobClient.DownloadToAsync(memoryStream);
+
+                // Reset the stream position to the beginning
+                memoryStream.Position = 0;
+
+                // Return the file as a download
+                return File(memoryStream, "application/zip", zipFileName);
+            }
+            else
+            {
+                TempData["error"] = "Error calling the Python service.";
+            }
+            return Json(new { data = id });
+        }*/
+
         #region API CALLS
 
         [HttpGet]
@@ -263,6 +309,49 @@ namespace WineView2Web.Areas.Admin.Controllers
             _unitOfWork.Save();
 
             return Json(new { success = true, message = "Delete Successful" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Forecast(int id)
+        {
+            string url = $"http://localhost:5002/wine_data?wineId={id}";
+
+            using HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                JObject jsonResponse = JObject.Parse(result);
+                string zipFileName = jsonResponse["zip_path"].Value<string>();
+
+                // Azure Blob Storage connection details
+                string containerName = "forecast";
+
+                // Retrieve storage account from connection string
+                BlobServiceClient blobServiceClient = new BlobServiceClient(_storageConnectionString);
+
+                // Get a reference to the container
+                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+                // Get a reference to the blob (file)
+                BlobClient blobClient = containerClient.GetBlobClient(zipFileName);
+
+                // Download the blob to a MemoryStream
+                MemoryStream memoryStream = new MemoryStream();
+                await blobClient.DownloadToAsync(memoryStream);
+
+                // Reset the stream position to the beginning
+                memoryStream.Position = 0;
+
+                // Delete the blob after download
+                await blobClient.DeleteIfExistsAsync();
+
+                // Return the file as a download
+                return File(memoryStream, "application/zip", zipFileName);
+            }
+
+            return StatusCode((int)response.StatusCode, "Error retrieving the file.");
         }
 
         #endregion
